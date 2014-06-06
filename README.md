@@ -9,49 +9,44 @@ There is no support of finger tables and finger-based routing. Also node leaves/
 
 Therefore, there are three things which have been implemented: 
 
-  1) ID space partitioning/re-partitioning
-  2) Ring-based routing
-  3) Node joins
+  1. ID space partitioning/re-partitioning
+  2. Ring-based routing
+  3. Node joins
 
 The content provider implements all DHT functionalities and supports insert query and delete operations.
 Thus, if you multiple instances of the app are run, all content provider instances form a Chord ring and
 serve insert/query requests in a distributed fashion according to the Chord protocol.
 
 SHA-1 is used as the hash function to generate keys.
-The following code snippet takes a string and generates a SHA-1 hash as a hexadecimal string. Given two keys, you can use the standard lexicographical string comparison to determine which one is greater in order to determine its position in the ring.
+The following code snippet takes a string and generates a SHA-1 hash as a hexadecimal string.
+Given two keys, you can use the standard lexicographical string comparison to determine which one is greater in order to determine its position in the ring.
 
-  import java.security.MessageDigest;
-  import java.security.NoSuchAlgorithmException;
-  import java.util.Formatter;
-  
-  private String genHash(String input) throws NoSuchAlgorithmException {
-  
+    import java.security.MessageDigest;
+    import java.security.NoSuchAlgorithmException;
+    import java.util.Formatter;
+    private String genHash(String input) throws NoSuchAlgorithmException {
     MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
     byte[] sha1Hash = sha1.digest(input.getBytes());
     Formatter formatter = new Formatter();
-  
     for (byte b : sha1Hash) {
       formatter.format("%02x", b);
     }
-    
     return formatter.toString();
-  
   }
-
 
 Use the python scripts to create, run and set the ports of the AVD’s, by using the following commands 
 
-  python create_avd.py 5
-  python run_avd.py 5
-  python set_redir.py 10000
+    python create_avd.py 5
+    python run_avd.py 5
+    python set_redir.py 10000
 
 The redirection ports for the AVD’s will be-
   
-  emulator-5554: “5554” - 11108
-  emulator-5556: “5556” - 11112
-  emulator-5558: “5558” - 11116
-  emulator-5560: “5560” - 11120
-  emulator-5562: “5562” - 11124
+    emulator-5554: “5554” - 11108
+    emulator-5556: “5556” - 11112
+    emulator-5558: “5558” - 11116
+    emulator-5560: “5560” - 11120
+    emulator-5562: “5562” - 11124
 
 There is support for two special strings for the selection parameter for query() and delete()
 
@@ -71,4 +66,4 @@ The content provider implements ring-based routing. Following the design of Chor
 There is a tester for checking if everything is working properly.
 
 
-Note: The python scripts and tester are provided by [Prof. Steve Ko](http://www.cse.buffalo.edu/people/?u=stevko) from the University at Buffalo.
+**Note:** The python scripts and tester are provided by [Prof. Steve Ko](http://www.cse.buffalo.edu/people/?u=stevko) from the University at Buffalo.
